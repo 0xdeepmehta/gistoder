@@ -1,0 +1,45 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Chrome ext CI
+
+on:
+  push:
+    branches: [ master ]    
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14.x'
+    - run: npm ci
+    - run: npm run build --if-present
+      
+    - name: Create Release Folder
+      run: rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' ./dist ./release
+    - name: Switch to Release Folder
+      run: |
+        cd release
+        ls -la
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+        REPO_OWNER: keithweaver
+
+
+# [ CD ] use to put it on chrome store 
+#     - name: Upload & release
+#       uses: mnao305/chrome-extension-upload@1.1.1
+#       with:
+#         file-path: src/build/main.js
+#         extension-id: hogefuga(extension id)
+#         client-id: ${{ secrets.CLIENT_ID }}
+#         client-secret: ${{ secrets.CLIENT_SECRET }}
+#         refresh-token: ${{ secrets.REFRESH_TOKEN }}

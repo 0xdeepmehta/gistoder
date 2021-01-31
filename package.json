@@ -1,0 +1,32 @@
+{
+  "name": "gitloader",
+  "version": "1.0.0",
+  "description": "Download Gist in One Click",
+  "main": "index.js",
+  "scripts": {
+    "build:bg": "parcel build src/background/index.js -d dist/background",
+    "build:content": "parcel build src/content/index.js -d dist/content",
+    "build:popup": "parcel build src/popup/index.html -d dist/popup --public-url ./",
+    "build": "npm run build:bg && npm run build:content && npm run build:popup",
+    "clean": "rimraf dist",
+    "copy:static": "copyfiles manifest.json assets/**/* dist",
+    "dist": "npm run clean && npm run build && npm run copy:static",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Deep Mehta <itsdeveloperdeep@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@vue/component-compiler-utils": "^3.1.2",
+    "copyfiles": "^2.2.0",
+    "parcel-bundler": "^1.12.4",
+    "rimraf": "^3.0.2",
+    "sass": "^1.26.5",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "dependencies": {
+    "vue": "^2.6.11"
+  }
+}
