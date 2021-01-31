@@ -34,11 +34,14 @@ jobs:
         REPO_OWNER: keithweaver
 
 
-# [ CD ] use to put it on chrome store 
+# # [ CD ] use to put it on chrome store 
 #     - name: Upload & release
+#       run: zip -r release.zip ./release
+      
+#     - name: Release to Chrome
 #       uses: mnao305/chrome-extension-upload@1.1.1
 #       with:
-#         file-path: src/build/main.js
+#         file-path: release.zip
 #         extension-id: hogefuga(extension id)
 #         client-id: ${{ secrets.CLIENT_ID }}
 #         client-secret: ${{ secrets.CLIENT_SECRET }}
